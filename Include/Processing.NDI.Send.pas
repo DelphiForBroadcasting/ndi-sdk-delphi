@@ -22,7 +22,7 @@ type
     // that you are submitting at. The same is true for audio. In general if you are submitting
     // video and audio off a single thread then you should only clock one of them (video is
     // probably the better of the two to clock off). If you are submtiting audio and video
-    // of seperate threads then having both clocked can be useful.
+    // of separate threads then having both clocked can be useful.
     clock_video : integer;
     clock_audio : integer;
   end;
@@ -42,11 +42,11 @@ procedure NDIlib_send_send_video(p_instance: TNDIlib_send_instance; p_video_data
 // This will add a video frame and will return immediately, having scheduled the frame to be displayed.
 // All processing and sending of the video will occur asynchronously. The memory accessed by NDIlib_video_frame_t
 // cannot be freed or re-used by the caller until a synchronizing event has occured. In general the API is better
-// able to take advantage of asynchronous processing than you might be able to by simple having a seperate thread
+// able to take advantage of asynchronous processing than you might be able to by simple having a separate thread
 // to submit frames.
 //
 // This call is particularly beneficial when processing BGRA video since it allows any color conversion, compression
-// and network sending to all be done on seperate threads from your main rendering thread.
+// and network sending to all be done on separate threads from your main rendering thread.
 //
 // Synchronozing events are :
 //		- a call to NDIlib_send_send_video

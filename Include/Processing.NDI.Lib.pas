@@ -36,18 +36,18 @@ const
 
   {$IFDEF UNIX}
     {$IFDEF DARWIN}
-      PROCESSINGNDILIB_API = 'rocessing.NDI.Lib.dylib';
+      PROCESSINGNDILIB_API = 'libndi.dylib';
     {$ELSE}
       {$IFDEF FPC}
-        PROCESSINGNDILIB_API = 'rocessing.NDI.Lib.so';
+        PROCESSINGNDILIB_API = 'libndi.so';
       {$ELSE}
-        PROCESSINGNDILIB_API = 'rocessing.NDI.Lib.so.0';
+        PROCESSINGNDILIB_API = 'libndi.so.0';
       {$ENDIF}
     {$ENDIF}
   {$ENDIF}
 
   {$IFDEF MACOS}
-    PROCESSINGNDILIB_API = 'rocessing.NDI.Lib';
+    PROCESSINGNDILIB_API = 'libndi.dylib';
   {$ENDIF}
 
 

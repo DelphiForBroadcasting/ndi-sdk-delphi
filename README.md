@@ -1,7 +1,7 @@
 # ndi-sdk-delphi
 NewTek NDI SDK
 
-* NewTek NDI SDK 20160516<br>
+* NewTek NDI SDK 20160630<br>
 * Development environment - Delphi XE10<br>
 
 <b>Ported by:</b>

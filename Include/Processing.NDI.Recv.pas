@@ -12,6 +12,13 @@ type
 	  NDIlib_recv_bandwidth_lowest  = 0,			// Receive video at a lower bandwidth and resolution.
 	  NDIlib_recv_bandwidth_highest = 100			// Default
   );
+  
+  TNDIlib_recv_color_format = (
+	NDIlib_recv_color_format_BGRA_BGRA = 0,			// No alpha channel: BGRA, Alpha channel: BGRA
+	NDIlib_recv_color_format_UYVY_BGRA = 1,			// No alpha channel: UYVY, Alpha channel: BGRA
+	NDIlib_recv_color_format_BGRX_BGRA = 2				// No alpha channel: BGRX, Alpha channel: BGRA
+);
+
 
 // The creation structure that is used when you are creating a receiver
 type
@@ -20,27 +27,19 @@ type
     // The source that you wish to connect to.
     source_to_connect_to : TNDIlib_source;
 
-    // What color space is your preference ?
-    //
-    //	prefer_UYVY == TRUE
-    //		No Alpha channel   : UYVY
-    //		With Alpha channel : BGRA
-    //
-    //	prefer_UYVY == FALSE
-    //		No Alpha channel   : BGRA
-    //		With Alpha channel : BGRA
-    prefer_UYVY : integer;
+	// Your preference of color space. See above.
+	color_format : TNDIlib_recv_color_format;
 
     // The bandwidth setting that you wish to use for this video source. Bandwidth
     // controlled by changing both the compression level and the resolution of the source.
     // A good use for low bandwidth is working on WIFI connections.
     bandwidth : TNDIlib_recv_bandwidth;
 
-    // When this flag is FALSE, all video that you receive will be progressive. For sources
-    // that provide fielded, this is defielded on the receiving side (because we cannot change
-    // what the up-stream source was actually rendering. This is provided as a conveniance to
-    // down-stream sources that do not wish to understand fielded video. There is almost no
-    // performance impact of using this function.
+	// When this flag is FALSE, all video that you receive will be progressive. For sources
+	// that provide fields, this is de-interlaced on the receiving side (because we cannot change
+	// what the up-stream source was actually rendering. This is provided as a convenience to
+	// down-stream sources that do not wish to understand fielded video. There is almost no 
+	// performance impact of using this function.
     allow_video_fields : integer;
   end;
 
@@ -81,7 +80,7 @@ function NDIlib_recv_create2(p_create_settings: PNDIlib_recv_create): TNDIlib_re
   cdecl; external PROCESSINGNDILIB_API;
 
 // This function is depreciated, please use NDIlib_recv_create2 if you can. Using this function will continue to work, and be
-// supported for backwards compatability. This version sets bandwidth to highest and allow fields to true.
+// supported for backwards compatibility. This version sets bandwidth to highest and allow fields to true.
 function NDIlib_recv_create(p_create_settings: PNDIlib_recv_create): TNDIlib_recv_instance;
   cdecl; external PROCESSINGNDILIB_API;
 
@@ -92,8 +91,8 @@ procedure NDIlib_recv_destroy(p_instance : TNDIlib_recv_instance);
 // This will allow you to receive video, audio and metadata frames.
 // Any of the buffers can be NULL, in which case data of that type
 // will not be captured in this call. This call can be called simultaneously
-// on seperate threads, so it is entirely possible to receive audio, video, metadata
-// all on seperate threads. This function will return NDIlib_frame_type_none if no
+// on separate threads, so it is entirely possible to receive audio, video, metadata
+// all on separate threads. This function will return NDIlib_frame_type_none if no
 // data is received within the specified timeout and NDIlib_frame_type_error if the connection is lost.
 // Buffers captured with this must be freed with the appropriate free function below.
 function NDIlib_recv_capture(

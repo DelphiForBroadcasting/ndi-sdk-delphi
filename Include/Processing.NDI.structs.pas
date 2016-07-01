@@ -12,8 +12,9 @@ type
   );
 
   TNDIlib_FourCC_type_e = (
-	  NDIlib_FourCC_type_UYVY = $59565955,  //Y VYU
-	  NDIlib_FourCC_type_BGRA = $41524742  // ARGB
+	  NDIlib_FourCC_type_UYVY = $59565955,  //YVYU
+	  NDIlib_FourCC_type_BGRA = $41524742,  // ARGB
+	  NDIlib_FourCC_type_BGRX = $58524742   // XRGB
   );
 
 // When you specify this as a timecode, the timecode will be synthesized for you. This may
